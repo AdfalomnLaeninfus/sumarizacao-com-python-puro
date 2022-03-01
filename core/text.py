@@ -1,6 +1,6 @@
 class TextProcessor:
     def __init__(self):
         self.pontuacao = {
-            "pt-br": " ".join("!\"#$%'").split()
+            "pt-br": " ".join("!\"#$%'()*+,-./:;<>=?@[]\\^_`{~}").split()
         }
 
