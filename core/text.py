@@ -17,7 +17,14 @@ class ProcessadorTexto:
                 "suas", "nosso", "nós", "apenas",
                 "no", "na", "nos", "nas", "pois",
                 "me", "eu", "tu", "mim", "só",
-                "isso", "pra",
+                "isso", "pra", "se", "ou", "que",
+                "são", "por", "que", "ser", "você",
+                "para", "faz", "podem", "sem", "foi",
+                "etc", "seja", "irão", "fará",
+                "toda", "quando", "entanto", "entretanto",
+                "acaso", "caso", "esse", "essa", "serão",
+                "dar", "este", "esta", "estes", "estas",
+                "vou", "irei", "quer", "pode"
             ]
         }
 
@@ -36,11 +43,11 @@ class ProcessadorTexto:
             tmp = ""
 
             for letra in token:
-                if letra not in self.pontuacao["pt-br"]:
-                    tmp = tmp + letra
+                if letra.lower() not in self.pontuacao["pt-br"]:
+                    tmp = tmp + letra.lower()
             
-            if tmp not in self.stopwords["pt-br"] and not tmp.isdigit():
-                tokens.append(tmp)
+            if tmp.lower() not in self.stopwords["pt-br"] and not tmp.isdigit():
+                tokens.append(tmp.lower())
                 
         texto_formatado = " ".join(tokens)
 
@@ -68,3 +75,17 @@ class ProcessadorTexto:
 
         return frequencia
 
+    def tokenize_frase(self, txt:str):
+        frases = list()
+
+        tmp = ""
+        for i in txt:
+    
+            if i == ".":
+                tmp += i
+                frases.append(tmp.strip())
+                tmp = ""
+            else:
+                tmp += i
+
+        return frases
