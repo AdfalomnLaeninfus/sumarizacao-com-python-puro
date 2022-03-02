@@ -1,7 +1,7 @@
 class ProcessadorTexto:
     def __init__(self):
         self.pontuacao = {
-            "pt-br": " ".join("!\"#$%'()*+,-./:;<>=?@[]\\^_`{~}").split()
+            "pt-br": "! \" # $ % ' ( ) * + , - . / : ; < > = ? @ [ ] \\ ^ _ ` { ~ } “ ” \\n \\t \\r".split()
         }
 
         self.stopwords = {
@@ -43,11 +43,11 @@ class ProcessadorTexto:
             tmp = ""
 
             for letra in token:
-                if letra.lower() not in self.pontuacao["pt-br"]:
-                    tmp = tmp + letra.lower()
+                if letra not in self.pontuacao["pt-br"]:
+                    tmp = tmp + letra
             
-            if tmp.lower() not in self.stopwords["pt-br"] and not tmp.isdigit():
-                tokens.append(tmp.lower())
+            if tmp not in self.stopwords["pt-br"] and not tmp.isdigit():
+                tokens.append(tmp)
                 
         texto_formatado = " ".join(tokens)
 
@@ -75,7 +75,7 @@ class ProcessadorTexto:
 
         return frequencia
 
-    def tokenize_frase(self, txt:str):
+    def tokenize_de_frases(self, txt:str):
         frases = list()
 
         tmp = ""
@@ -83,9 +83,33 @@ class ProcessadorTexto:
     
             if i == ".":
                 tmp += i
-                frases.append(tmp.strip())
+                frases.append([tmp.strip()])
                 tmp = ""
             else:
                 tmp += i
 
         return frases
+    
+    def tokenize_de_palavras(self, txt:str):
+        txt = txt.lower()
+        lista_de_palavras = list()
+
+        tmp = ""
+
+        for letra in txt:
+            print(tmp)
+            for sinal in self.pontuacao["pt-br"]:
+                if sinal in tmp:
+                    tmp.replace(sinal, ' ')
+
+            if letra not in self.pontuacao["pt-br"] and letra and tmp not in self.pontuacao["pt-br"]:
+                tmp += letra
+            elif letra in self.pontuacao["pt-br"]:
+                lista_de_palavras.append(tmp)
+                tmp = letra
+            else:
+                lista_de_palavras.append(tmp)
+                lista_de_palavras.append(letra)
+                tmp = ""
+
+        print(lista_de_palavras)

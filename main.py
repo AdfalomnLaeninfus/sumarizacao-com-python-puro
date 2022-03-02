@@ -1,3 +1,4 @@
+from concurrent.futures import process
 from core.text import ProcessadorTexto
 
 processador = ProcessadorTexto()
@@ -19,6 +20,14 @@ contagem_das_palavras = processador.frequencia_das_palavras(texto_formatado)
 
 frequencia_proporcional = processador.frequencia_proporcional(contagem_das_palavras)
 
-frases = processador.tokenize_frase(txt)
+frases = processador.tokenize_de_frases(txt)
 
-print(frases[3])
+tok_palavras = [frases for frases in processador.tokenize_de_frases(txt)]
+
+# print(processador.pontuacao["pt-br"])
+
+# for i in tok_palavras:
+#     for j in i:
+#         processador.tokenize_de_palavras(j)
+
+processador.tokenize_de_palavras("Adriano\né mó noob.")
